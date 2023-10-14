@@ -1,0 +1,89 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Open+Sans:ital,wght@0,400;1,400;1,700&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Caveat', cursive !important;
+
+    font-weight: 800;
+    font-size: large;
+    /* font-family: 'Open Sans', sans-serif ; */
+}
+
+
+.my-navbar{
+    /* display: flex !important;
+    flex-direction: row !important; */
+}
+
+.nav-btn, .ToolIcon__icon{
+    width: 36px;
+    height: 36px;
+    background-color: #fffffff5;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.nav-btn:hover, .ToolIcon__icon:hover{
+    background-color: #e3e2fe;
+}
+
+.welcome-screen-decor{
+    width: 300px;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    margin-inline-start: 0.6rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    color: #e3e2fe;
+}
+
+.welcome-screen-decor-hint-label{
+    text-wrap: nowrap;
+}
+
+.toolbar-container .welcome-screen-decor{
+    margin-left: 150px;
+    /* align-items: center; */
+    width: 200px;
+}
+
+.toolbar-container .welcome-screen-decor svg{
+    width: 60px;
+}
+
+.toolbar-container .welcome-screen-decor-hint-label{
+    text-wrap: wrap;
+}
+
+.nav-btn>span, .ToolIcon__icon>svg{
+    position: relative;
+    bottom: 5px; 
+    width: 14px;
+    height: 14px;
+}
+
+.ToolIcon__keybinding{
+    position: relative;
+    bottom: 20px;
+    right: -10px;
+    color: #afafaf;
+    font-size: smaller;
+    font-weight: 600;
+}
+.sidebar-trigger__label, .HintViewer{
+    color: #afafaf;
+    font-size: small;
+    font-style: thin;
+}
+
+.sidebar{
+    height: 38px;
+    width: auto;
+}
