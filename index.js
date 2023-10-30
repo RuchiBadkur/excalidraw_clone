@@ -3,7 +3,7 @@ const canvas = document.getElementById("canvas");
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
-CanvasRenderingContext2D
+// CanvasRenderingContext2D
 
 const c = canvas.getContext("2d");
 // // c is the context object responsible for making any kind of drawings on the canvas.
@@ -32,6 +32,10 @@ const c = canvas.getContext("2d");
 //  * L2 : p1(50, 150), p2(300, 40) => blue colored, 10px thickness
 //  * L3 : p1(500, 500), p2(600, 600) => tomato colored, 5px thickness
 //  */
+
+
+const drawingHistory = [];
+let pathCount = 0;
 
 function drawLine(p1, p2, color = "blue", thickness = 2){
     c.beginPath();
@@ -98,11 +102,27 @@ c.stroke(); // strokes out from starting beginPath
 
 
 /** Free hand drawing */
-canvas.addEventListener("mousedown", onMouseDown);
+// canvas.addEventListener("mousedown", onMouseDown);
+
+
+
+let options = {
+    isFreeHandDrawing: true,
+    isRectangleDrawing: false,
+}
  
 let drawingColor = "black"; 
 let previousPosition = null;
 
+function enableRectDrawing(){
+    options = {
+        isFreeHandDrawing: false,
+        isRectangleDrawing: true,
+    }
+    console.log(options);
+}
+
+let initialCount;
 function onMouseDown(e){
     previousPosition = [e.clientX, e.clientY];
     // console.log("mouse down", e.clientX, e.clientY);
@@ -110,6 +130,7 @@ function onMouseDown(e){
     // previousPosition = [x, y]; //{x:x, y:y}
     c.strokeStyle = drawingColor;
     c.lineWidth = 2;
+    initialCount = pathCount;
     /** 
      * Add mousemove event and mouseup event
      */
@@ -125,16 +146,42 @@ function onMouseMove(e){
     //1. for the first time inside this previousPosition =
     let currentPosition = [e.clientX, e.clientY];
     //2. draw line from previousPosition to currentPosition
-    c.beginPath();
-    c.moveTo(...previousPosition);
-    c.lineTo(...currentPosition);
-    c.stroke();
-    c.closePath();
-    previousPosition = currentPosition;
+    if(options.isFreeHandDrawing){
+        c.beginPath();
+        c.moveTo(...previousPosition);
+        c.lineTo(...currentPosition);
+        c.stroke();
+        c.closePath();
+        previousPosition = currentPosition;
+    }
+
+    if(options.isRectangleDrawing){
+        drawRectangle(currentPosition);
+    }
+}
+
+function drawRectangle(currentPosition){
+    if(initialCount !== pathCount){
+        c.putImageData(drawingHistory[initialCount-1], 0, 0);
+        pathCount = initialCount;
+    }
+
+    let width = currentPosition[0] - previousPosition[0];
+    let height = currentPosition[1] - previousPosition[1];
+    c.strokRect(previousPosition[0], previousPosition[1], width, height);
+    drawingHistory.push(c.getImageData(0, 0, canvas.width, canvas.height));
+    pathCount++;
 }
 
 function onMouseUp(e){
     // console.log("mouse up", e.clientX, e.clientY);
     // we need to remove mouse move listener after mouse up
     canvas.removeEventListener("mousemove", onMouseMove);
+    canvas.removeEventListener("mouseup", onMouseUp);
+    drawingHistory.push( c.getImageData(0, 0, canvas.width, canvas.height));
+    pathCount++;
 }
+
+// pathCount
+// drawingHistory
+// c.putImageData(drawingHistory[2], 0, 0);

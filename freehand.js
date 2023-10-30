@@ -1,16 +1,16 @@
 const pencil = document.getElementById("pencil");
 let isPencilActive = false; //intially the pencil is inactive.
 
-const colorPicker = document.getElementById("color-picker");
+// const colorPicker = document.getElementById("color-picker");
 
-colorPicker.addEventListener("change", () => {
-    drawingColor = colorPicker.value;
-    // console.log("input value changed");
-});
+// colorPicker.addEventListener("change", () => {
+//     drawingColor = colorPicker.value;
+//     // console.log("input value changed");
+// });
 
 // default
-canvas.style.cursor = "auto";
-canvas.removeEventListener("mousedown", onMouseDown);
+// canvas.style.cursor = "auto";
+// canvas.removeEventListener("mousedown", onMouseDown);
 
 function onPencilClick(){
     pencil.classList.toggle("active");
